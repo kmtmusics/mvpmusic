@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>اتاق ترک: {{ track.title }}</h2>
+
+  <div class="box">
+    <label>BPM: <input id="bpm" value="{{ track.bpm or 84 }}"></label>
+    <a href="{{ url_for('export_lrc', track_id=track.id) }}">Export LRC</a>
+  </div>
+
+  <audio id="player" controls preload="metadata" style="width:100%">
+    <source src="{{ url_for('static', filename='audio/sample.mp3') }}" type="audio/mpeg">
+    مرورگر شما از Audio پشتیبانی نمی‌کند.
+  </audio>
+
+  <div class="box">
+    <button id="startMetro">شروع مترونوم</button>
+    <button id="stopMetro">توقف مترونوم</button>
+    <span id="meterState">Bar : Beat</span>
+  </div>
+
+  <h3>لیرکس</h3>
+  <ol id="lyricsList">
+    {% for ln in lines %}
+      <li data-id="{{ ln.id }}">
+        <div contenteditable="true" class="lineText">{{ ln.text }}</div>
+        <div>Beat: <input class="beat" value="{{ ln.beat or '' }}"></div>
+        <div>Time: <span class="timeDisplay"></span></div>
+        <button class="setFromAudio">Set from Audio</button>
+        <button class="setFromMetro">Set from Metronome</button>
+      </li>
+    {% else %}
+      <li data-id="">
+        <div contenteditable="true" class="lineText">خط جدید...</div>
+        <div>Beat: <input class="beat" value=""></div>
+        <div>Time: <span class="timeDisplay"></span></div>
+        <button class="setFromAudio">Set from Audio</button>
+        <button class="setFromMetro">Set from Metronome</button>
+      </li>
+    {% endfor %}
+  </ol>
+
+  <button id="addLine">+ خط جدید</button>
+  <button id="saveTimes">ذخیره</button>
+
+  <script src="{{ url_for('static', filename='js/metronome.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/lyrics_sync.js') }}"></script>
+{% endblock %}

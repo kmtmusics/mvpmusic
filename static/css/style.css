@@ -1,0 +1,13 @@
+body{font-family:-apple-system, Segoe UI, Roboto, Arial, sans-serif; direction:rtl; margin:0;}
+.topnav{display:flex; justify-content:space-between; align-items:center; padding:10px 12px; background:#111; color:#fff;}
+.topnav a{color:#fff; text-decoration:none; margin:0 8px;}
+.topnav .inline{display:inline-block; margin:0 8px;}
+main{padding:16px;}
+h2{font-size:16px; margin:12px 0;}
+form input, form button, select{padding:6px 8px; margin:4px 0;}
+.error{color:#b30000; margin:8px 0;}
+.ok{color:#0a8f2c; margin:8px 0;}
+.track-list{list-style:none; padding:0;}
+.track-list li{padding:8px; border:1px solid #eee; border-radius:6px; margin:6px 0; display:flex; gap:12px; align-items:center; justify-content:space-between;}
+.box{border:1px solid #eee; border-radius:6px; padding:8px; margin:10px 0;}
+.lineText{border:1px dashed #ccc; padding:6px; border-radius:4px; min-width:200px; display:inline-block;}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>ثبت‌نام</h2>
+  {% if error %}<div class="error">{{ error }}</div>{% endif %}
+  <form method="post">
+    <label>نام کاربری: <input name="username" required autocomplete="username"></label><br>
+    <label>نام نمایشی: <input name="display_name" placeholder="اختیاری"></label><br>
+    <label>رمز: <input name="password" type="password" required autocomplete="new-password"></label><br>
+    <button type="submit">ثبت‌نام</button>
+  </form>
+  <p>حساب داری؟ <a href="{{ url_for('login') }}">ورود</a></p>
+{% endblock %}

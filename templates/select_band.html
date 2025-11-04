@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>بندها</h2>
+  {% if error %}<div class="error">{{ error }}</div>{% endif %}
+  {% if ok %}<div class="ok">{{ ok }}</div>{% endif %}
+
+  <div class="box">
+    <h3>سوییچ بین بندهای من</h3>
+    <form method="post">
+      <input type="hidden" name="action" value="switch">
+      <select name="band_id">
+        {% for b, m in memberships %}
+          <option value="{{ b.id }}" {% if current_band and b.id==current_band.id %}selected{% endif %}>{{ b.name }} ({{ m.role }})</option>
+        {% endfor %}
+      </select>
+      <button type="submit">ورود</button>
+    </form>
+  </div>
+
+  <div class="box">
+    <h3>ورود به بند موجود</h3>
+    <form method="post">
+      <input type="hidden" name="action" value="join">
+      <label>نام بند: <input name="band_name"></label>
+      <label>پسورد بند: <input type="password" name="band_password"></label>
+      <button type="submit">ورود</button>
+    </form>
+  </div>
+
+  <div class="box">
+    <h3>ساخت بند جدید</h3>
+    <form method="post">
+      <input type="hidden" name="action" value="create">
+      <label>نام بند: <input name="new_band_name" required></label>
+      <label>پسورد بند: <input type="password" name="new_band_password" required></label>
+      <button type="submit">ساخت بند</button>
+    </form>
+  </div>
+
+  {% if current_band %}
+  <div class="box">
+    <h3>مدیریت بند: {{ current_band.name }}</h3>
+    <p>برای دعوت مستقیم، از آیدی یا نام کاربری استفاده کن.</p>
+
+    <!-- دعوت با آیدی -->
+    <form method="post" style="margin-bottom:8px;">
+      <input type="hidden" name="action" value="invite_by_id">
+      <label>آیدی کاربر: <input name="user_id" placeholder="مثلاً 3"></label>
+      <button type="submit">افزودن با آیدی</button>
+    </form>
+
+    <!-- دعوت با نام کاربری -->
+    <form method="post">
+      <input type="hidden" name="action" value="invite_by_username">
+      <label>نام کاربری: <input name="username" placeholder="مثلاً parsa"></label>
+      <button type="submit">افزودن با نام کاربری</button>
+    </form>
+  </div>
+  {% endif %}
+{% endblock %}

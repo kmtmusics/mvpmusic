@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>داشبورد {% if current_band %}— {{ current_band.name }}{% endif %}</h2>
+  <form action="{{ url_for('create_track') }}" method="post" class="new-track">
+    <input name="title" placeholder="عنوان ترک...">
+    <button type="submit">+ ترک جدید</button>
+  </form>
+  <ul class="track-list">
+    {% for t in tracks %}
+      <li>
+        <strong>{{ t.title }}</strong>
+        <span>BPM: {{ t.bpm or '-' }}</span>
+        <a href="{{ url_for('track_room', track_id=t.id) }}">اتاق ترک</a>
+      </li>
+    {% else %}
+      <li>هنوز ترکی نساختی.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

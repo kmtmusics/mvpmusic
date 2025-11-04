@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Music MVP</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="topnav">
+    <div class="left">
+      <a href="{{ url_for('dashboard') }}">داشبورد</a>
+      <a href="{{ url_for('select_band') }}">بندها</a>
+      {% if current_user.is_authenticated %}
+      <form action="{{ url_for('band_switch') }}" method="post" class="inline">
+        <label>بند فعلی:</label>
+        <select name="band_id" onchange="this.form.submit()">
+          {% for b, m in memberships %}
+            <option value="{{ b.id }}" {% if current_band and b.id==current_band.id %}selected{% endif %}>{{ b.name }} ({{ m.role }})</option>
+          {% endfor %}
+        </select>
+      </form>
+      {% endif %}
+    </div>
+    <div class="right">
+      {% if current_user.is_authenticated %}
+        <span>سلام، {{ current_user.display_name or current_user.username }} — ID: {{ current_user.id }}</span>
+        <a href="{{ url_for('logout') }}">خروج</a>
+      {% else %}
+        <a href="{{ url_for('login') }}">ورود</a>
+        <a href="{{ url_for('register') }}">ثبت‌نام</a>
+      {% endif %}
+    </div>
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>
