@@ -261,8 +261,13 @@ if __name__ == '__main__':
     app.run(debug=False, host="0.0.0.0", port=5050)
 from flask import jsonify, abort  # اگر بالاتر import نشده
 from flask_login import login_required  # اگر بالاتر import نشده
-from models import db, Lyric  # اگر بالاتر import نشده
-
+@app.post("/lyrics/<int:line_id>/delete")
+@login_required
+def delete_lyric(line_id):
+    item = LyricsLine.query.get_or_404(line_id)
+    db.session.delete(item)
+    db.session.commit()
+    return jsonify(ok=True)
 @app.post("/lyrics/<int:lyric_id>/delete")
 @login_required
 def delete_lyrics(lyrics_id):
