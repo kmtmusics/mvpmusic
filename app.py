@@ -266,8 +266,7 @@ from models import db, Lyric  # اگر بالاتر import نشده
 @app.post("/lyrics/<int:lyric_id>/delete")
 @login_required
 def delete_lyric(lyric_id):
-    item = Lyric.query.get_or_404(lyric_id)
-    # اگر لازم داری، اینجا می‌تونی چک‌های دسترسی اضافه کنی
+    item = Lyrics.query.get_or_404(lyric_id)
     db.session.delete(item)
     db.session.commit()
     return jsonify(ok=True)
