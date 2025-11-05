@@ -275,3 +275,25 @@ def delete_lyrics(lyrics_id):
     db.session.delete(item)
     db.session.commit()
     return jsonify(ok=True)
+@app.post("/tracks/<int:track_id>/delete")
+@login_required
+def delete_track(track_id):
+    t = Track.query.get_or_404(track_id)
+
+    # پاک‌سازی وابستگی‌ها (تا ارور FK نگیری)
+    # حذف همه‌ی سطرهای لیرکسِ این ترک
+    all_lyrics = Lyrics.query.filter_by(track_id=track_id).all()
+    for lyr in all_lyrics:
+        LyricsLine.query.filter_by(lyrics_id=lyr.id).delete()
+        db.session.delete(lyr)
+
+    # اگر اتصالِ Track به Project داری، پاک کن
+    try:
+        ProjectTrack.query.filter_by(track_id=track_id).delete()
+    except Exception:
+        pass
+
+    db.session.delete(t)
+    db.session.commit()
+    # بعد از حذف، برگرد به خانه یا انتخاب بند
+    return redirect(url_for("index"))
