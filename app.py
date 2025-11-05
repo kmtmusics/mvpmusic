@@ -265,7 +265,7 @@ from models import db, Lyric  # اگر بالاتر import نشده
 
 @app.post("/lyrics/<int:lyric_id>/delete")
 @login_required
-def delete_lyric(lyric_id):
+def delete_lyrics(lyrics_id):
     item = Lyrics.query.get_or_404(lyric_id)
     db.session.delete(item)
     db.session.commit()
