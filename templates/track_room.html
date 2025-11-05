@@ -21,13 +21,14 @@
   <h3>لیرکس</h3>
   <ol id="lyricsList">
     {% for ln in lines %}
-      <li data-id="{{ ln.id }}">
-        <div contenteditable="true" class="lineText">{{ ln.text }}</div>
-        <div>Beat: <input class="beat" value="{{ ln.beat or '' }}"></div>
-        <div>Time: <span class="timeDisplay"></span></div>
-        <button class="setFromAudio">Set from Audio</button>
-        <button class="setFromMetro">Set from Metronome</button>
-      </li>
+     <li id="lyric-{{ ln.id }}" data-id="{{ ln.id }}">
+  <div contenteditable="true" class="lineText">{{ ln.text }}</div>
+  <div>Beat: <input class="beat" value="{{ ln.beat or '' }}"></div>
+  <div>Time: <span class="timeDisplay"></span></div>
+  <button class="setFromAudio">Set from Audio</button>
+  <button class="setFromMetro">Set from Metronome</button>
+  <button class="delete-btn" title="حذف" data-type="lyric" data-id="{{ ln.id }}">×</button>
+</li>
     {% else %}
       <li data-id="">
         <div contenteditable="true" class="lineText">خط جدید...</div>
